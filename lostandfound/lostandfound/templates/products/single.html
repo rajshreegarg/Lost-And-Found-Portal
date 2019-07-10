@@ -1,0 +1,100 @@
+{% extends 'base.html'%}
+{%load staticfiles %}
+
+{% block head%}
+<style>
+.button5 {border-radius: 50%;
+font-size: 28px;}
+</style>
+
+{% endblock %}
+{% block content %}
+<div class='container'>
+    {%if messages%}
+    {%for message in messages%}
+    <div class="alert alert-success" role="alert">
+      <center>{{message}}</center>
+      </div>
+    {%endfor%}
+    {%endif%}
+    </div>
+
+<br/>
+<div class='container-fluid'>
+<div class="row">
+  <div class='col-sm-5'>
+      {% for img in images%}
+          {% if img.featured %}
+          <div class="col-xs-12">
+
+              <img style= "width:100%; height: 250px;"class="rounded img-fluid d-block" src= "/media/{{img.image}}" />
+              </div>
+            {%endif%}
+          {% endfor %}
+        {%for img in images%}
+          {% if not img.featured %}
+              <div class="col-md-6">
+                  <img style="width:100%; height: 250px;"class='rounded img-fluid d-block' src='/media/{{img.image}}'/>
+              </div>
+              {%endif%}
+
+      {% endfor %}
+      <hr/>
+      </div>
+      <div class="col-sm-7">
+        <div class="page-header text-info">
+          <h1>{{product.title}}
+            {% if user.is_authenticated%}
+{%if product.active%}
+        &nbsp;    <button type="button" id="mybtn"class="btn btn-primary btn-lg pull-right  btn-success"data-toggle="modal" data-target="#exampleModalCenter" >Found</button>
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Your Action</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body text-muted">
+                            <h6>  Sure you want to <mark>delete</mark> the item ?</h6>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" onclick=" location.href = '{{product.get_absolute_url}}' "data-dismiss="modal">Close</button>
+
+
+                              <button  id="mybtn"class="btn  btn-success " onclick=" location.href = '{{product.get_absolute_url}}found' "  >Save</button>
+
+
+                            </div>
+                          </div>
+                          {%else%}
+
+                          &nbsp;    <button type="button" id="mybtn"class="btn btn-primary btn-lg pull-right  btn-success"data-toggle="modal" disabled>Found</button>
+
+
+{%endif%}
+</h1>
+          <hr/>
+          <button type="button" id="mybtn"class="btn btn-info btn-lg pull-right " onclick="location.href='{{product.get_absolute_url}}edit'">Edit</button>
+          <button type="button" id="mybtn"class="btn btn-danger btn-lg pull-right " onclick="location.href='{{product.get_absolute_url}}delete'">Delete</button>
+          {%endif%}
+
+      </div>
+      <div class="text-muted">
+      <h6><mark>Lost Location:</mark> {{product.lostlocation}}<br/><br/>
+        <mark>Contact:</mark> {{product.contact}}
+
+      </h6>
+
+      <hr/>
+      </div>
+      <div class='text-justify'>
+        {{product.description|linebreaks}}
+        </div>
+        </div>
+  </div>
+
+</div>
+
+{%endblock%}

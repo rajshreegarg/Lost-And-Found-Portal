@@ -1,0 +1,93 @@
+{% extends 'base.html'%}
+
+
+{% block jumbotron%}
+<div class="jumbotron text-center" >
+<h3> <b> <p class="font-weight-lighter">
+
+  Edit <mark>Details</mark> of the Lost Item :</p></b></h3>
+<hr/>
+
+<p class="lead">You can edit the details of your lost artefacts here!</p>
+</div>
+{%endblock%}
+
+{% block content %}
+<br/>
+
+<br/>
+<div class='container '>
+
+
+<div class='container'>
+<form  class="needs-validation"  method='post'>
+  {% csrf_token %}
+
+  <div class="form-group col-md-6">
+    <label for="title">Title:</label>
+    <input type="text" class="form-control" maxlength="100"  name="title" id="title"value='{{instance.title}}'   required>
+    <div class="valid-tooltip">
+       Looks good!
+     </div>
+     <div class="invalid-tooltip">
+        Please choose a unique and valid Title.
+      </div>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="description">Description:</label>
+    <input type="text" class="form-control" id="description" name="description" value='{{instance.description}}'required>
+    <div class="valid-tooltip">
+       Looks good!
+     </div>
+     <div class="invalid-tooltip">
+        Please provide a description.
+      </div>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="lostlocation">Lost Location:</label>
+    <input type="text" class="form-control" id="lostlocation" name="lostlocation"value='{{instance.lostlocation}}' required>
+    <div class="valid-tooltip">
+       Looks good!
+     </div>
+     <div class="invalid-tooltip">
+        Please provide a lost location of the item.
+      </div>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="contact">Contact Number:</label>
+  <input type="number" class="form-control" id="contact" maxlength="10"  name="contact"  value='{{instance.contact}}'required>
+  <div class="valid-tooltip">
+     Looks good!
+   </div>
+   <div class="invalid-tooltip">
+      Please provide a valid contact number.
+    </div>
+  </div>
+  <div class="form-group col-md-6">
+    <label for="slug">Slug:</label>
+    <input type="text" class="form-control" id="slug" name="slug"  value='{{instance.slug}}'required>
+    <div class="valid-tooltip">
+       Looks good!
+     </div>
+     <div class="invalid-tooltip">
+        Please provide a unique slug for the item.
+      </div>
+  </div>
+  <div class="form-group col-md-6">
+<div class="checkbox">      {{form.active}}
+      <label  for="active">
+        Active
+      </label>
+    </div>
+  </div>
+
+<div class='container-fluid'>
+  <button type="submit" class="btn btn-primary btn-success " >Submit</button>
+  <button type="submit" class="btn btn-primary btn-danger " onclick="location.href='{% url 'lostproducts' %}'">Cancel</button>
+
+  </div>
+</form>
+</div>
+
+
+{% endblock %}

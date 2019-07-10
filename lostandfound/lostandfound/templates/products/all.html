@@ -1,0 +1,13 @@
+{% extends 'base.html'%}
+
+
+{% block content %}
+
+<ul>
+{% for lostproduct in lostproducts %}
+<li>{{ lostproduct.title}}  {{lostproduct.lostlocation}}</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

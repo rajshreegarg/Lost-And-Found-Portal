@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{%load staticfiles %}
+
+{% block head%}
+<style>
+.pagination {
+  display: flex;
+    justify-content: center;
+}
+</style>
+{% endblock%}
+
+
+{% block content %}
+<div class="alert alert-success" role="alert">
+  Searched for: {{query}}
+</div>
+
+<br/><br/><br/>
+
+<div class='container'>
+<div class="container-fluid">
+<div class='row'>
+{% for product in products%}
+<div class='col-sm-4'>
+    <div class="card text-center bg-light " style="width: 18rem;">
+      {% if product.productimage_set.all %}
+
+            {% for i in product.productimage_set.all%}
+                {% if i.featured %}
+                  <img class="rounded img-fluid d-block" src= "{{MEDIA_URL}}{{i.image}}" />
+                {%endif%}
+            {% endfor%}
+      {% else %}
+      <img class = "rounded img-fluid d-block" src='{% static "img/default.jpg"%}'/>
+      {% endif%}
+      <div class="card-body">
+
+
+                  <h5 class="card-title "> <a  href = "{{product.get_absolute_url}} ">{{product.title}}</a></h5>
+                  Description: {{product.description| truncatewords:20}}<br/> Lost Location: {{product.lostlocation}}<hr/>
+                  <button type="button" class="btn btn-primary " onclick="location.href='{{product.get_absolute_url}}'">View</button>
+                  <!-- Button trigger modal -->
+                    {% if product.active  %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Found</button>
+        {%else%}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" disabled>Found</button>
+          {%endif%}
+                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Your Action</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body text-muted">
+                        <h6>  Are you sure the item is given to the <mark>respective user</mark>?</h6>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+                          <button  id="mybtn"class="btn btn-primary " onclick=" location.href = '{%url "update_found" product.id %}' "  >Save</button>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-footer text-muted">
+        {{product.updated}}  </div>
+              </div>
+           </div>
+
+            {% cycle "" "" "</div><br/><br/><div class='row'> "%}
+          {%endfor%}
+  </div>
+  <hr/>
+  <div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+&nbsp;&nbsp;
+            <a href="?page={{ products.previous_page_number }}">previous</a>
+            &nbsp;&nbsp;
+        {% endif %}
+
+        <span class="current">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+        </span>
+&nbsp;&nbsp;
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">next</a>
+            &nbsp;&nbsp;
+            <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        &nbsp;&nbsp;
+    </span>
+</div>
+<br/>
+
+  </div>
+{% endblock %}

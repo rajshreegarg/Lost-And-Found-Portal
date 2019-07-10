@@ -1,0 +1,110 @@
+{% extends 'base.html'%}
+{%load staticfiles %}
+{% block head%}
+<style>
+.pagination {
+  display: flex;
+    justify-content: center;
+}
+</style>
+{% endblock%}
+
+{% block jumbotron%}
+<div >
+<div class="jumbotron text-center" >
+<h3> <b> <p class="font-weight-lighter">
+
+Search for your <mark>Lost Article</mark> here !</p></b></h3>
+<hr/>
+
+<p class="lead">Good Luck, may you find your lost article today.</p>
+</div>
+</div>
+{%endblock%}
+
+{% block content%}
+<div class='container'>
+    {%if messages%}
+    {%for message in messages%}
+    <div class="alert alert-success" role="alert">
+      <center>{{message}}</center>
+      </div>
+    {%endfor%}
+    {%endif%}
+    </div>
+<br/>
+
+
+<div class=" container page-header text-danger text-center">
+  <h4>You can add the details of your lost article here.<button type="button"class="btn-lg btn-primary pull-right"onclick="location.href='{% url 'lostform' %}'">ADD THE LOST ITEM</button>
+</h4>
+  <hr/>
+</div>
+
+
+<div class="container">
+  <br/>
+  <br/>
+<div class='row'>
+{% for product in lostproducts%}
+  <div class='col-sm-4'>
+      <div class="card text-center bg-light " style="width: 18rem;">
+        {% if product.productimage_set.all %}
+
+              {% for i in product.productimage_set.all%}
+                  {% if i.featured %}
+                    <img style="width: auto; height: 250px;"class="rounded img-fluid d-block" src= "/media/{{i.image}}" />
+                <a href='{{product.get_absolute_url}}'></a>
+{%endif%}
+              {% endfor%}
+        {% else %}
+        <img style="width: auto; height: 250px;"class = "rounded img-fluid d-block" src='{% static "img/default.jpg"%}'/>
+        <a href='{{product.get_absolute_url}}'></a>
+
+        {% endif%}
+        <div class="card-body">
+
+          <h5 class="card-title "> <a  href = "{{product.get_absolute_url}} ">{{product.title}}</a></h5>
+          Description: {{product.description| truncatewords:20}}<br/> Lost Location: {{product.lostlocation}}<hr/>
+          <button type="button" class="btn btn-primary " onclick="location.href='{{product.get_absolute_url}}'">View</button>
+          <!-- Button trigger modal -->
+{%if not product.active%}
+&nbsp;
+<button type="button" class="btn btn-success " disabled>Found</button>
+{%endif%}
+
+        </div>
+        <div class="card-footer text-muted">
+{{product.updated}}  </div>
+      </div>
+   </div>
+
+    {% cycle "" "" "</div><br/><br/><div class='row'> "%}
+  {%endfor%}
+  </div>
+  <hr/>
+  <div class="pagination">
+    <span class="step-links">
+        {% if lostproducts.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+&nbsp;&nbsp;
+            <a href="?page={{ lostproducts.previous_page_number }}">previous</a>
+            &nbsp;&nbsp;
+        {% endif %}
+
+        <span class="current">
+            Page {{ lostproducts.number }} of {{ lostproducts.paginator.num_pages }}.
+        </span>
+&nbsp;&nbsp;
+        {% if lostproducts.has_next %}
+            <a href="?page={{ lostproducts.next_page_number }}">next</a>
+            &nbsp;&nbsp;
+            <a href="?page={{ lostproducts.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+        &nbsp;&nbsp;
+    </span>
+</div>
+<br/>
+  </div>
+
+{% endblock %}

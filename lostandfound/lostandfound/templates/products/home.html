@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+{%load staticfiles %}
+{% block jumbotron%}
+<div class="jumbotron text-center" >
+<h4>  <p class="font-weight-lighter">
+
+Hello,<mark> {{username_is}}</mark></p></h4>
+
+<h1> Welcome to Lost & Found Portal</h1>
+<p class="lead">Search and find your appropriate lost artefacts</p>
+</div>
+
+  <div class="col-sm-12" >
+  <img class = "img-fluid rounded mx-auto d-block alt="Responsive image" src='{% static "img/33.png"%}'/>
+    </div>
+{%endblock%}
+<!--{% block content%}
+<div class="container-fluid">
+<div class='row'>
+{% for product in lostproducts%}
+  <div class='col-md-4'>
+      <div class="card" style="width: 18rem;">
+        {% if product.productimage_set.all %}
+
+              {% for i in product.productimage_set.all%}
+                  {% if i.featured %}
+                    <img class="rounded img-fluid d-block" src= "{{MEDIA_URL}}{{i.image}}" />
+                  {%endif%}
+              {% endfor%}
+        {% else %}
+        <img class = "img-fluid" src='{% static "img/default.jpg"%}'/>
+        {% endif%}
+        <div class="card-body">
+          <h5 class="card-title"> <a  href = "{{product.get_absolute_url}} ">{{product.title}}</a></h5>
+          <p class="card-text">       {{product.description| truncatewords:20}}<br/><br/> Lost Location: {{product.lostlocation}}</p>
+          <a href="#" class="btn btn-primary">View</a>
+        </div>
+      </div>
+   </div>
+
+    {% cycle "" "" "</div><br/><br/><div class='row'> "%}
+
+  {%endfor%}
+  </div>
+  </div>
+{% endblock %}-->

@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{%block head%}
+<style>
+.table{
+    margin: 0px auto;
+    float: none;
+    font-color:black;
+}
+</style>
+{%endblock%}
+{%block content%}
+<br/>
+<div class='container'>
+<h4><p class="text-muted ">
+Total <mark>Found</mark> items are --> {{found.total}}</p></h4>
+  <hr/>
+  </div>
+  <br/>
+<div class=' container-fluid col-sm-8 col-sm-offset-2 '>
+<table  class="table table-dark table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+
+
+  {%for item in found.products.all%}
+
+<tr class='table table-info'>
+ <th scope="row">{{item.id}}</th>
+ <th scope="col">{{item}}</th>
+ <th scope="col">{{item.description}}</th>
+ <th scope="col">{{item.active}}</th>&nbsp;&nbsp;&nbsp;
+ <th scope="col"><a href='{% url "update_found" item.id%}'>Remove</a></th>
+
+</tr>
+
+{%endfor%}
+
+
+</table>
+</div>
+{%endblock%}

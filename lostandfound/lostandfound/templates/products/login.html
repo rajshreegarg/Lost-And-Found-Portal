@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{% block content %}
+<br/>
+<div class='container-fluid'>
+<h4><p class="text-muted ">
+  You can<mark> Login</mark> here!</p></h4>
+  <hr/>
+  </div>
+
+<div class='container'>
+<form  method ="post">
+  {%csrf_token%}
+  {{form.as_p}}
+<!--  {%if request.GET.next%}
+  <input type="hidden" name="next" value="{{request.GET.next}}">
+  {%endif%}-->
+  <div class='container-fluid'>
+    <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+    <hr/>
+    <a href='/profile/password-reset'>Forgot your password?</a>
+  </form>
+  </div>
+
+{% endblock %}

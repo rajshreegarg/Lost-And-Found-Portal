@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+{%load staticfiles %}
+{% block jumbotron%}
+<div class="jumbotron text-center" >
+<h3> <b> <p class="font-weight-lighter">
+
+Your <mark>Profile</mark> Details :</p></b></h3>
+<hr/>
+
+<p class="lead">You can have a look or update your details here!</p>
+</div>
+{%endblock%}
+
+
+{% block content%}
+<br/><br/>
+<div class="container text-center">
+  <div class='col-xs-12'>
+    {% if messages%}
+    {%for mesaage in messages%}
+    <div class=" role="alert">
+      <center>{{message}}</center>
+      </div>
+      {%endfor%}
+    {%endif%}
+    </div>
+<h6>  <p> Username&nbsp; :&nbsp;&nbsp;  &nbsp;{{user}}</p></h6>
+  <br/>
+<h6>  <p> Firstname&nbsp; :&nbsp; &nbsp; &nbsp;  {{user.first_name}}</p></h6><br/>
+<h6>  <p> Lastname&nbsp; :&nbsp; &nbsp; &nbsp;  {{user.last_name}}</p></h6><br/>
+<h6>  <p> Email&nbsp; :&nbsp; &nbsp; &nbsp;  {{user.email}}</p></h6><br/>
+
+  </div>
+  <br/>
+<br/>
+
+  <div class=" container page-header text-danger text-center">
+    <h4>You can Edit your Profile here.<button type="button"class="btn-lg btn-primary pull-right"onclick="location.href='{% url 'edit_profile' %}'">Edit Profile</button>
+  </h4>
+    <hr/>
+  </div>
+
+
+
+
+{%endblock%}
